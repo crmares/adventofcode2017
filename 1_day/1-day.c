@@ -5,14 +5,23 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+int usage() {
+
+	printf("Usage: <<./a.out>> <<input_file>>  <<'a' for the first part, 'b' for the second one>>\n");
+	exit(0);
+	return 0;
+}
+
 int main(int argc, char **argv) {
 
-	if(argc != 2) {
-		printf("Usage: <<./a.out>> <<input_file>>\n");
-		exit(0);
+	if(argc != 3) {
+		usage();
 	}
-
+	int step = 1, sum = 0;
 	FILE *f = fopen(argv[1], "rb");
+	if(f == NULL)
+		usage();
+
 	fseek(f, 0, SEEK_END);
 	long fsize = ftell(f);
 	fseek(f, 0, SEEK_SET);
@@ -21,8 +30,12 @@ int main(int argc, char **argv) {
 	fread(buffer, fsize, 1, f);
 	fclose(f);
 
-	int sum = 0;
-	int step = fsize / 2;
+	if(strcmp(argv[2], "a") == 0)
+		step = 1;
+	else if(strcmp(argv[2], "b") == 0)
+		step = fsize / 2;
+	else
+		usage();
 
 	for(int i = 0; i < fsize; i++) 
 		if(buffer[i] == buffer[ (i + step)%fsize ])
