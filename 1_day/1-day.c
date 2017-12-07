@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+
+
 int usage() {
 
 	printf("Usage: <<./a.out>> <<input_file>>  <<'a' for the first part, 'b' for the second one>>\n");
