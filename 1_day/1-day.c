@@ -7,14 +7,16 @@
 
 
 
-int usage() {
+int usage()
+{
 
 	printf("Usage: <<./a.out>> <<input_file>>  <<'a' for the first part, 'b' for the second one>>\n");
 	exit(0);
 	return 0;
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
 
 	if(argc != 3) {
 		usage();
@@ -45,7 +47,7 @@ int main(int argc, char **argv) {
 		if(buffer[i] == buffer[ (i + step) % fsize ])
 			sum += buffer[i] - '0';
 
-	printf("The solution to the captha is: %d\n", sum);
+	printf("The solution to the puzzle is: %d\n", sum);
 
 
 	return 0;

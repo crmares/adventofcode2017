@@ -18,7 +18,8 @@ int usage() {
 
 
 //https://stackoverflow.com/questions/17770202/remove-extra-whitespace-from-a-string-in-c
-char *removeSpaces(char *str) {
+char *removeSpaces(char *str)
+{
     char *inp = str, *outp = str;
     int prevSpace = 0;
 
@@ -55,14 +56,12 @@ int main(int argc, char *argv[])
 		usage();
 
 
-  while (getline(&line, &count, f) != -1)
-  {
+  while (getline(&line, &count, f) != -1) {
   	line = removeSpaces(line);
 
      token = strtok(line, " ");
      m = 0;
-     while(token != NULL)
-     {
+     while(token != NULL) {
        matrix[n][m] = atoi(token);
        token=strtok(NULL, " ");
        m++;
@@ -104,7 +103,7 @@ int main(int argc, char *argv[])
 
 	fclose(f);
 
-	printf("The solution to the captha is: %d\n", sum);
+	printf("The solution to the puzzle is: %d\n", sum);
 
 
 	return 0;
