@@ -32,15 +32,17 @@ int main(int argc, char **argv) {
 	fread(buffer, fsize, 1, f);
 	fclose(f);
 
+  	//case a: first part of the problem
 	if(strcmp(argv[2], "a") == 0)
 		step = 1;
+  	//case b: second part of the problem
 	else if(strcmp(argv[2], "b") == 0)
 		step = fsize / 2;
 	else
 		usage();
 
 	for(int i = 0; i < fsize; i++) 
-		if(buffer[i] == buffer[ (i + step)%fsize ])
+		if(buffer[i] == buffer[ (i + step) % fsize ])
 			sum += buffer[i] - '0';
 
 	printf("The solution to the captha is: %d\n", sum);
