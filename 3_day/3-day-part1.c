@@ -8,7 +8,7 @@
 int usage()
 {
 
-	printf("Usage: <<./a.out>> <<input_file>>  <<'a' for the first part, 'b' for the second one>>\n");
+	printf("Usage: <<./a.out>> <<input_file>>\n");
 	exit(0);
 	return 0;
 }

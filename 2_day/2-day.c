@@ -9,8 +9,8 @@
 
 #define N 100
 
-int usage() {
-
+int usage() 
+{
 	printf("Usage: <<./a.out>> <<input_file>>  <<'a' for the first part, 'b' for the second one>>\n");
 	exit(0);
 	return 0;
@@ -41,7 +41,6 @@ char *removeSpaces(char *str)
 
 int main(int argc, char *argv[])
 {
-
 	if(argc != 3) {
 		usage();
 	}
