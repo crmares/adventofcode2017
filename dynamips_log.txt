@@ -1,4 +1,0 @@
-Dec 11 10:43:20.038 HYPERVISOR: Release 0.2.14-x86/Linux (tag 2014092320)
-Dec 11 10:43:20.038 HYPERVISOR: Started on TCP port = 7200.
-Dec 11 10:43:23.660 HYPERVISOR: Stopped.
-Dec 11 10:43:23.660 GENERAL: reset done.

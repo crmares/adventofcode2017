@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 	FILE *f = fopen(argv[1], "rb");
 	if(f == NULL)
 		usage();
-	int n;
+	int n, len;
 	char *line = malloc(sizeof(char) * N); 
 	char *token = NULL;
 	char **vector;
@@ -33,33 +33,23 @@ int main(int argc, char *argv[])
 		while(token != NULL) {
 			vector[n] = malloc(sizeof(char) * strlen(token));
 			strcpy(vector[n], token);
-			char *pch = strstr(vector[n], "\n");
-			if(pch != NULL) {
-  				strncpy(pch, "", 1);
-  				strcpy(vector[n], pch);
-			}
+			len = strlen(vector[n]);
+				if( vector[n][len-1] == '\n' )
+    				vector[n][len-1] = 0;
 			n++;
 			token = strtok(NULL, " ");
 		}
 		isDuplicate = 0;
 		for(int i = 0; i < n; i++) {
 			for(int j = i + 1; j < n; j++) {
-				if((strcmp(vector[i], vector[j]) == 0) && i != j) {
-					//printf("%s   %s   %d %d\n", vector[i], vector[j], i, j);
+				if((strcmp(vector[i], vector[j]) == 0)) {
 					isDuplicate = 1;
 				}
 			}
 		}
 		if(isDuplicate == 0) {
 			sum++;
-			printf("<<");
-			for(int i = 0; i < n; i++) {
-				printf("%s ", vector[i]);
-			}
-			printf(">>");
-			printf("\n");
 		}
-
 	}
 
 	printf("The solution to the puzzle is: %d\n", sum);
