@@ -23,20 +23,27 @@ int main(int argc, char *argv[])
 	if(f == NULL)
 		usage();
 	int instructions[N];
-	int n = 0, steps, current_step, prev_step, inc;
+	int n = 0, steps, current_step, prev_poz, inc, poz;
 
 	while (!feof(f))
 		fscanf(f, "%d", &instructions[n++]);
 
 	steps = 0;
-	current_step = instructions[0];
-	prev_step = current_step;
+	current_step = 0;
+	poz = 0;
+	prev_poz = poz;
 	while(1) {
+		inc = 1;
+		for(int i = 0; i < n; i++) {
+			printf("%d ", instructions[i]);
+		}
+		printf("\n");
+
 		if(strcmp(argv[2], "a") == 0) {
 			inc = 1;
 		}
 		else if(strcmp(argv[2], "b") == 0) {
-			if(current_step + instructions[current_step] >= 3)
+			if(current_step >= 3)
 				inc = -1;
 			else
 				inc = 1;
@@ -44,13 +51,21 @@ int main(int argc, char *argv[])
 		else
 			usage();
 
-		prev_step = current_step;
-		current_step += instructions[current_step];
-		instructions[prev_step] += inc;
+		prev_poz = poz;
+		poz = poz + current_step;
+		current_step = instructions[poz];
+		//printf("%d  %d\n", instructions[prev_poz]);
+
+		instructions[prev_poz] += inc;
+		//printf("%d\n", instructions[prev_poz]);
+		//printf("\n");
 		
-		steps++;
-		if(current_step >= n)
+		if(poz >= n || poz < 0)
 			break;
+		steps++;
+
+	
+
 	}
 
 	printf("The solution to the puzzle is: %d\n", steps);
