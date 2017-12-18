@@ -5,7 +5,7 @@
 #include <limits.h>
 #include <string.h>
 
-#define N 10000
+#define N 30000
 
 int usage() 
 {
@@ -16,12 +16,12 @@ int usage()
 
 char *save_state(int mem_banks[], int n)
 {
-	char *s = malloc(30 * sizeof(char)), buffer[30];
+	char *s = malloc(60 * sizeof(char)), buffer[30];
 	for(int i = 0; i < n; i++) {
 		sprintf(buffer, "%d", mem_banks[i]);
 		strcat(s, buffer);
+		strcat(s, ".");
 	}
-
 	return s;
 }
 
@@ -29,10 +29,9 @@ int duplicate_state(char **state, int m)
 {
 	for(int i = 0; i < m - 1; i++) {
 		if(strcmp(state[m - 1], state[i]) == 0)
-			return 1;
+			return i;
 	}
 	return 0;
-
 }
 
 int get_max_memory(int mem_banks[], int n)
@@ -42,12 +41,14 @@ int get_max_memory(int mem_banks[], int n)
 		if(mem_banks[i] > max)
 			max = mem_banks[i];
 	}
-
 	return max;
 }
 
 int main(int argc, char *argv[])
 {
+	if(argc != 3) {
+		usage();
+	}
 
 	FILE *f = fopen(argv[1], "rb");
 	if(f == NULL)
@@ -57,13 +58,19 @@ int main(int argc, char *argv[])
 	char **state = malloc(sizeof(char*) * N);
 	for(int i = 0; i < N; i++)
 		state[i] = malloc(sizeof(char) * N);
-	int n = 0, m = 0, max, steps = 0, start_poz, block_size;
+	int n = 0, m = 0, max, steps = 0;
+	int start_poz, block_size, loops, duplicate_position;
 
 	while (!feof(f))
 		fscanf(f, "%d", &mem_banks[n++]);
 
 	while(1) {
 		strcpy(state[m++], save_state(mem_banks, n));
+		duplicate_position = duplicate_state(state, m);
+		if(duplicate_position != 0 && m > 1) {
+			loops = m - duplicate_position - 1;
+			break;
+		}
 		max = get_max_memory(mem_banks, n);
 		for(int i = 0; i < n; i++) {
 			if(mem_banks[i] == max) {
@@ -78,12 +85,16 @@ int main(int argc, char *argv[])
 			mem_banks[start_poz]++;
 			block_size--;
 		}
-		if(duplicate_state(state, m) == 1 && m > 1)
-			break;
 		steps++;
-
 	}
-	printf("The solution to the puzzle is: %d\n", steps);
+	if(strcmp(argv[2], "a") == 0) {
+		printf("The solution to the puzzle is: %d\n", steps);
+	}
+	else if(strcmp(argv[2], "b") == 0) {
+		printf("The solution to the puzzle is: %d\n", loops);
+	}
+	else
+		usage();
 
 	fclose(f);
 
