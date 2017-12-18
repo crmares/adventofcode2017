@@ -34,10 +34,9 @@ int main(int argc, char *argv[])
 	prev_poz = poz;
 	while(1) {
 		inc = 1;
-		for(int i = 0; i < n; i++) {
-			printf("%d ", instructions[i]);
-		}
-		printf("\n");
+		prev_poz = poz;
+		current_step = instructions[poz];
+		poz = poz + current_step;
 
 		if(strcmp(argv[2], "a") == 0) {
 			inc = 1;
@@ -51,23 +50,11 @@ int main(int argc, char *argv[])
 		else
 			usage();
 
-		prev_poz = poz;
-		poz = poz + current_step;
-		current_step = instructions[poz];
-		//printf("%d  %d\n", instructions[prev_poz]);
-
 		instructions[prev_poz] += inc;
-		//printf("%d\n", instructions[prev_poz]);
-		//printf("\n");
-		
+		steps++;
 		if(poz >= n || poz < 0)
 			break;
-		steps++;
-
-	
-
 	}
-
 	printf("The solution to the puzzle is: %d\n", steps);
 
 	fclose(f);
